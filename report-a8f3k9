@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2UNDR 年度營運分析報告 2025–2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FFFFFF;
+    --bg-soft: #F5F6F8;
+    --bg-mid: #ECEEF2;
+    --black: #111318;
+    --dark: #2C3040;
+    --mid: #5A6072;
+    --light: #9AA0B0;
+    --border: #DDE0E8;
+    --blue: rgb(67, 143, 175);
+    --blue-dim: rgba(67,143,175,0.12);
+    --blue-mid: rgba(67,143,175,0.35);
+    --red: #D94F4F;
+    --red-dim: rgba(217,79,79,0.10);
+    --green: #2E9E6B;
+    --green-dim: rgba(46,158,107,0.10);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--dark);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 48px 60px;
+    position: relative;
+    border-bottom: 2px solid var(--blue);
+    background: linear-gradient(135deg, #ffffff 0%, #f0f6f9 100%);
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 28px;
+    font-weight: 600;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -1px;
+    color: var(--black);
+    margin-bottom: 8px;
+  }
+
+  .hero-title span { color: var(--blue); }
+
+  .hero-subtitle {
+    font-size: 13px;
+    color: var(--light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 60px;
+    margin-top: 16px;
+  }
+
+  .hero-kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    max-width: 1100px;
+  }
+
+  .kpi-cell {
+    background: var(--bg);
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-cell::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 40px; height: 3px;
+    background: var(--blue);
+  }
+
+  .kpi-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px;
+    color: var(--black);
+    line-height: 1;
+    display: block;
+  }
+
+  .kpi-label {
+    font-size: 11px;
+    color: var(--light);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-top: 6px;
+    display: block;
+  }
+
+  .kpi-growth {
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 4px;
+    display: block;
+  }
+
+  .kpi-growth.up { color: var(--green); }
+  .kpi-growth.down { color: var(--red); }
+
+  /* ─── SECTION LAYOUT ─── */
+  .section {
+    padding: 80px 48px;
+    border-bottom: 1px solid var(--border);
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--blue);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1;
+    margin-bottom: 20px;
+    color: var(--black);
+  }
+
+  .section-body {
+    font-size: 15px;
+    color: var(--mid);
+    max-width: 680px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  .blue-rule {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ─── CHARTS ─── */
+  .chart-wrap {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+
+  .chart-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--light);
+    margin-bottom: 24px;
+    font-weight: 600;
+  }
+
+  canvas { display: block; width: 100% !important; }
+
+  /* ─── TWO-COL ─── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* ─── INSIGHT CARDS ─── */
+  .insight-card {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--blue);
+    padding: 28px;
+    border-radius: 0 4px 4px 0;
+  }
+
+  .insight-card.danger {
+    border-left-color: var(--red);
+    background: var(--red-dim);
+  }
+
+  .insight-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: var(--black);
+  }
+
+  .insight-card p {
+    font-size: 14px;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* ─── FUNNEL ─── */
+  .funnel-bar-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .funnel-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .funnel-label {
+    font-size: 12px;
+    color: var(--mid);
+    width: 90px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .funnel-bar-bg {
+    flex: 1;
+    height: 36px;
+    background: var(--bg-mid);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .funnel-bar-fill {
+    height: 100%;
+    background: linear-gradient(to right, var(--blue), var(--blue-mid));
+    border-radius: 2px;
+    transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  .funnel-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    width: 80px;
+    text-align: right;
+    flex-shrink: 0;
+    color: var(--dark);
+  }
+
+  .funnel-loss {
+    font-size: 11px;
+    color: var(--light);
+    width: 60px;
+    flex-shrink: 0;
+    font-weight: 600;
+  }
+
+  /* ─── RFIM CARDS ─── */
+  .rfim-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .rfim-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .rfim-vip  { border-top: 3px solid var(--blue); }
+  .rfim-sleep { border-top: 3px solid #F59E0B; }
+  .rfim-once { border-top: 3px solid var(--red); }
+
+  .rfim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+
+  .rfim-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+  }
+
+  .rfim-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    color: var(--dark);
+    line-height: 1.1;
+  }
+
+  .rfim-count {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--dark);
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .rfim-count span {
+    font-size: 16px;
+    color: var(--light);
+    margin-left: 2px;
+  }
+
+  .rfim-ltv-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+  }
+
+  .rfim-ltv-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--light);
+    font-weight: 600;
+  }
+
+  .rfim-ltv-value {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .rfim-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 16px;
+  }
+
+  .rfim-strategy-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--light);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .rfim-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .rfim-tag {
+    font-size: 12px;
+    color: var(--mid);
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 99px;
+  }
+
+  @media (max-width: 768px) {
+    .rfim-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ─── RFIM TABLE ─── */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  .data-table th {
+    text-align: left;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--light);
+    padding: 10px 16px;
+    border-bottom: 2px solid var(--border);
+    font-weight: 600;
+  }
+
+  .data-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--dark);
+  }
+
+  .data-table tr:hover td { background: var(--bg-mid); }
+
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .badge.gold { background: rgba(67,143,175,0.12); color: var(--blue); border: 1px solid var(--blue-mid); }
+  .badge.blue { background: var(--blue-dim); color: var(--blue); border: 1px solid var(--blue-mid); }
+  .badge.red  { background: var(--red-dim); color: var(--red); border: 1px solid rgba(217,79,79,0.25); }
+
+  /* ─── STRATEGY CARDS ─── */
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .strategy-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .strategy-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--blue);
+  }
+
+  .strategy-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    line-height: 1;
+    color: rgba(67,143,175,0.07);
+    position: absolute;
+    right: 16px;
+    top: 8px;
+  }
+
+  .strategy-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    color: var(--blue);
+    margin-bottom: 12px;
+  }
+
+  .strategy-card ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .strategy-card ul li {
+    font-size: 13px;
+    color: var(--mid);
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.5;
+  }
+
+  .strategy-card ul li:last-child { border-bottom: none; }
+
+  .strategy-card ul li::before {
+    content: '→ ';
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  /* ─── CONCLUSION ─── */
+  .conclusion {
+    background: linear-gradient(135deg, #f0f6f9 0%, #ffffff 100%);
+    border-top: 2px solid var(--blue);
+    padding: 100px 48px;
+    text-align: center;
+  }
+
+  .conclusion-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 7vw, 96px);
+    line-height: 1;
+    margin-bottom: 24px;
+    color: var(--black);
+  }
+
+  .conclusion-title em {
+    color: var(--blue);
+    font-style: normal;
+  }
+
+  .conclusion-body {
+    font-size: 16px;
+    color: var(--mid);
+    max-width: 600px;
+    margin: 0 auto 48px;
+    line-height: 1.9;
+  }
+
+  .final-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .final-tag {
+    background: var(--blue-dim);
+    border: 1px solid var(--blue-mid);
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 20px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 11px;
+    color: var(--light);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-top: 1px solid var(--border);
+    background: var(--bg-soft);
+  }
+
+  /* ─── GROWTH BARS ─── */
+  .growth-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .growth-label {
+    font-size: 12px;
+    color: var(--mid);
+    width: 90px;
+    flex-shrink: 0;
+  }
+
+  .growth-bar-track {
+    flex: 1;
+    height: 10px;
+    background: var(--bg-mid);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .growth-bar-fill {
+    height: 100%;
+    background: var(--blue);
+    border-radius: 99px;
+  }
+
+  .growth-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    width: 90px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ─── DEVICE BAR ─── */
+  .device-bar-wrap { padding: 8px 0; }
+
+  .device-row { margin-bottom: 20px; }
+
+  .device-row-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .device-name {
+    font-size: 13px;
+    color: var(--mid);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .device-icon { font-size: 16px; }
+
+  .device-pct {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  .device-bar-track {
+    width: 100%;
+    height: 20px;
+    background: var(--bg-mid);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .device-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1.4s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  @media (max-width: 768px) {
+    .hero, .section { padding: 60px 24px; }
+    .hero-kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .conclusion { padding: 60px 24px; }
+    .funnel-label { width: 60px; font-size: 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <p class="hero-label">年度營運分析總報告 · 兩年度對比 2024/06 – 2026/06</p>
+  <h1 class="hero-title">2UNDR<br><span>年度總覽</span></h1>
+  <p class="hero-subtitle">Annual Business Review · Taiwan Market · YoY Comparison</p>
+
+  <div class="hero-kpi-grid">
+    <div class="kpi-cell">
+      <span class="kpi-value">$1,316,105</span>
+      <span class="kpi-label">GMV · 2025–2026</span>
+      <span style="font-size:12px;color:var(--light);display:block;margin-top:2px;">去年 $604,000</span>
+      <span class="kpi-growth up">▲ +117.95% YoY</span>
+    </div>
+    <div class="kpi-cell">
+      <span class="kpi-value">$1,182,148</span>
+      <span class="kpi-label">總營業額 · 2025–2026</span>
+      <span style="font-size:12px;color:var(--light);display:block;margin-top:2px;">去年 $563,000</span>
+      <span class="kpi-growth up">▲ +109.95% YoY</span>
+    </div>
+    <div class="kpi-cell">
+      <span class="kpi-value">473</span>
+      <span class="kpi-label">訂單數 · 2025–2026</span>
+      <span style="font-size:12px;color:var(--light);display:block;margin-top:2px;">去年 223 筆</span>
+      <span class="kpi-growth up">▲ +112.11% YoY</span>
+    </div>
+    <div class="kpi-cell">
+      <span class="kpi-value">394</span>
+      <span class="kpi-label">消費顧客數 · 2025–2026</span>
+      <span style="font-size:12px;color:var(--light);display:block;margin-top:2px;">去年 181 人</span>
+      <span class="kpi-growth up">▲ +117.68% YoY</span>
+    </div>
+    <div class="kpi-cell">
+      <span class="kpi-value">436</span>
+      <span class="kpi-label">新增會員 · 2025–2026</span>
+      <span style="font-size:12px;color:var(--light);display:block;margin-top:2px;">去年 128 人</span>
+      <span class="kpi-growth up">▲ +240.62% YoY</span>
+    </div>
+    <div class="kpi-cell">
+      <span class="kpi-value">$2,499</span>
+      <span class="kpi-label">平均客單價 · 2025–2026</span>
+      <span style="font-size:12px;color:var(--light);display:block;margin-top:2px;">去年 $2,525</span>
+      <span class="kpi-growth down">▼ -1.02% YoY</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ANNUAL GROWTH ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Annual Summary · 兩年度對比 2024–2025 vs 2025–2026</p>
+  <h2 class="section-title">品牌規模成長對比</h2>
+  <p class="section-body">
+    過去兩個年度，2UNDR 持續投入品牌經營、會員拓展與數位行銷。從 2024–2025 到 2025–2026，品牌營業額從約 56 萬元翻倍成長至 118 萬元，訂單數、顧客數與新會員數全面突破，整體規模在一年內實現翻倍跨越。
+  </p>
+
+  <!-- YoY comparison table + chart side by side -->
+  <div class="two-col" style="margin-bottom:32px;">
+    <div class="chart-wrap">
+      <p class="chart-title">品牌規模對比</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th style="color:var(--light)">2024–2025</th>
+            <th style="color:var(--blue)">2025–2026</th>
+            <th>成長率</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>GMV</strong></td>
+            <td style="color:var(--light)">$604,000</td>
+            <td style="color:var(--blue);font-weight:600">$1,316,105</td>
+            <td><span class="badge blue">+117.95%</span></td>
+          </tr>
+          <tr>
+            <td><strong>總營業額</strong></td>
+            <td style="color:var(--light)">$563,000</td>
+            <td style="color:var(--blue);font-weight:600">$1,182,148</td>
+            <td><span class="badge blue">+109.95%</span></td>
+          </tr>
+          <tr>
+            <td><strong>訂單數</strong></td>
+            <td style="color:var(--light)">223 筆</td>
+            <td style="color:var(--blue);font-weight:600">473 筆</td>
+            <td><span class="badge blue">+112.11%</span></td>
+          </tr>
+          <tr>
+            <td><strong>消費顧客</strong></td>
+            <td style="color:var(--light)">181 人</td>
+            <td style="color:var(--blue);font-weight:600">394 人</td>
+            <td><span class="badge blue">+117.68%</span></td>
+          </tr>
+          <tr>
+            <td><strong>新增會員</strong></td>
+            <td style="color:var(--light)">128 人</td>
+            <td style="color:var(--blue);font-weight:600">436 人</td>
+            <td><span class="badge blue">+240.62%</span></td>
+          </tr>
+          <tr>
+            <td><strong>平均客單價</strong></td>
+            <td style="color:var(--light)">$2,525</td>
+            <td style="color:var(--dark);font-weight:600">$2,499</td>
+            <td><span class="badge red">-1.02%</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="chart-wrap">
+      <p class="chart-title">核心指標兩年對比（以較大值為100%）</p>
+      <canvas id="yoyChart" height="320"></canvas>
+    </div>
+  </div>
+
+  <!-- Growth metrics YoY bars -->
+  <div class="chart-wrap" style="margin-bottom:32px;">
+    <p class="chart-title">年增率一覽</p>
+    <canvas id="growthChart" height="160"></canvas>
+  </div>
+
+  <!-- Two-year marketing investment -->
+  <div class="two-col" style="margin-bottom:32px;">
+    <div class="chart-wrap">
+      <p class="chart-title">行銷投資明細（2025–2026）</p>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+        <div>
+          <div style="font-size:12px;color:var(--light);margin-bottom:4px;">品牌顧問與行銷策略合作</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--dark);">$600,000</div>
+          <div style="font-size:12px;color:var(--light);margin-top:12px;margin-bottom:4px;">Meta 廣告投放</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--dark);">$177,578</div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:11px;color:var(--light);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;">總投入</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--blue);line-height:1;">$777,578</div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--mid);line-height:1.8;font-style:italic;">
+        品牌營收於一年內翻倍成長，會員規模成長超過三倍，顯示行銷投入已成功完成品牌第一階段擴張目標。
+      </p>
+    </div>
+
+    <div class="chart-wrap">
+      <p class="chart-title">行銷投入帶來的成果</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>指標</th><th style="text-align:right">成果</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>營業額增加</td>
+            <td style="text-align:right;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--green)">+$619,148</td>
+          </tr>
+          <tr>
+            <td>GMV 增加</td>
+            <td style="text-align:right;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--green)">+$712,105</td>
+          </tr>
+          <tr>
+            <td>訂單增加</td>
+            <td style="text-align:right;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue)">+250 筆</td>
+          </tr>
+          <tr>
+            <td>消費顧客增加</td>
+            <td style="text-align:right;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue)">+213 人</td>
+          </tr>
+          <tr>
+            <td>新增會員</td>
+            <td style="text-align:right;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--blue)">+308 人</td>
+          </tr>
+          <tr>
+            <td>網站流量增加</td>
+            <td style="text-align:right;font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--mid)">+22,198 人</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Next stage goals -->
+  <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:16px;">下一階段目標</p>
+  <div class="insight-card" style="margin-bottom:16px;">
+    <h3>品牌成長第一階段已完成</h3>
+    <p>品牌知名度建立 · 流量規模擴大 · 新客獲取能力提升。過去一年在扣除商品成本與廣告投放後，商品營運仍維持正向貢獻，顯示品牌已具備穩定的商品銷售能力。</p>
+  </div>
+  <div class="strategy-grid" style="margin-top:0;">
+    <div class="strategy-card">
+      <span class="strategy-num">↑</span>
+      <h3>提升會員回購率</h3>
+      <ul><li>舊客 86 人 → 150 人目標</li><li>強化 VIP 會員專屬體驗</li></ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">↑</span>
+      <h3>優化商品頁轉換</h3>
+      <ul><li>攻破 91.4% 的流失斷點</li><li>情境式內容重構商品頁</li></ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">↑</span>
+      <h3>提高客單價</h3>
+      <ul><li>目標從 $2,499 → $3,000+</li><li>滿額優惠與組合推薦策略</li></ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">↑</span>
+      <h3>累積品牌長期資產</h3>
+      <ul><li>內容行銷與社群深耕</li><li>建立穩定的會員與顧客關係</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ REVENUE TREND ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Section 01 · Revenue</p>
+  <h2 class="section-title">營收趨勢</h2>
+  <p class="section-body">
+    全年最高峰出現在 <strong style="color:var(--blue)">2025年11月雙11檔期</strong>，單月GMV達 $219,127，奠定全年基礎。進入2026年後，母親節檔期（4~5月）接力帶動第二波成長，5月營業額達 $130,301，顯示品牌節慶行銷策略奏效。值得注意的是，整體流量年增53%，但營收卻成長110%，代表網站轉換效率同步提升，而非單純依賴廣告投放擴大規模。
+  </p>
+  <div class="chart-wrap">
+    <p class="chart-title">月營業額 & GMV 走勢（千元）</p>
+    <canvas id="revenueChart" height="300"></canvas>
+  </div>
+</section>
+
+<!-- ═══════════════ TRAFFIC + DEVICE ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Section 02 · Traffic & Device</p>
+  <h2 class="section-title">流量與裝置分析</h2>
+  <p class="section-body">
+    全年累積 <strong style="color:var(--blue)">63,798 不重複訪客</strong>，工作階段年增53.4%。在裝置分布上，高達81.32%的訪客透過手機瀏覽網站，2UNDR 本質上是一個 Mobile First 品牌。這意味著所有行銷素材—Banner、EDM、Landing Page、商品頁—都應優先以手機使用者的體驗為設計核心，而非桌面版。
+  </p>
+  <div class="two-col">
+    <div class="chart-wrap">
+      <p class="chart-title">訪客裝置分布</p>
+      <div class="device-bar-wrap">
+        <div class="device-row">
+          <div class="device-row-header">
+            <span class="device-name"><span class="device-icon">📱</span> 手機 Mobile</span>
+            <span class="device-pct" style="color:var(--blue)">81.3%</span>
+          </div>
+          <div class="device-bar-track">
+            <div class="device-bar-fill" style="width:81.32%;background:var(--blue)"></div>
+          </div>
+        </div>
+        <div class="device-row">
+          <div class="device-row-header">
+            <span class="device-name"><span class="device-icon">🖥️</span> 桌機 Desktop</span>
+            <span class="device-pct" style="color:var(--light)">18.7%</span>
+          </div>
+          <div class="device-bar-track">
+            <div class="device-bar-fill" style="width:18.68%;background:var(--bg-mid);border:1px solid var(--border)"></div>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--light);margin-top:16px;line-height:1.6;">
+          → 81% 訪客使用手機，所有行銷素材應以 Mobile First 為優先設計原則
+        </p>
+      </div>
+    </div>
+    <div class="chart-wrap">
+      <p class="chart-title">流量 vs 轉換率對比</p>
+      <canvas id="trafficChart" height="180"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FUNNEL ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Section 03 · Conversion Funnel</p>
+  <h2 class="section-title">轉換漏斗分析</h2>
+  <p class="section-body">
+    數據顯示，網站最大的成長機會不在於廣告投放，而在於<strong style="color:var(--blue)">商品頁的轉換率優化</strong>。從商品瀏覽到加入購物車，流失高達91.4%，是整個漏斗中最嚴重的斷點。若能將此環節轉換率提升兩到三個百分點，對整體營收的拉抬效益，將遠超過同等廣告預算的投入。
+  </p>
+  <div class="chart-wrap">
+    <p class="chart-title">全年轉換漏斗</p>
+    <div class="funnel-bar-wrap">
+      <div class="funnel-row">
+        <span class="funnel-label">工作階段</span>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width:100%"></div></div>
+        <span class="funnel-val">62,869</span>
+        <span class="funnel-loss"></span>
+      </div>
+      <div class="funnel-row">
+        <span class="funnel-label">商品瀏覽</span>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width:30.5%"></div></div>
+        <span class="funnel-val">19,171</span>
+        <span class="funnel-loss" style="color:var(--mid)">-69.5%</span>
+      </div>
+      <div class="funnel-row">
+        <span class="funnel-label">加入購物車</span>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width:2.6%;background:var(--red)"></div></div>
+        <span class="funnel-val">1,644</span>
+        <span class="funnel-loss" style="color:var(--red);font-weight:700">-91.4%</span>
+      </div>
+      <div class="funnel-row">
+        <span class="funnel-label">購物車</span>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width:2.2%"></div></div>
+        <span class="funnel-val">1,382</span>
+        <span class="funnel-loss" style="color:var(--mid)">-15.9%</span>
+      </div>
+      <div class="funnel-row">
+        <span class="funnel-label">結帳頁</span>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width:0.96%"></div></div>
+        <span class="funnel-val">602</span>
+        <span class="funnel-loss" style="color:var(--mid)">-56.4%</span>
+      </div>
+      <div class="funnel-row">
+        <span class="funnel-label">成交</span>
+        <div class="funnel-bar-bg"><div class="funnel-bar-fill" style="width:0.67%"></div></div>
+        <span class="funnel-val">420</span>
+        <span class="funnel-loss" style="color:var(--mid)">-30.2%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="insight-card danger">
+      <h3>🚨 最大漏斗問題</h3>
+      <p>商品頁到加入購物車，流失高達 <strong style="color:var(--red)">91.4%</strong>。這是整個成長飛輪的瓶頸，優先修復此環節，其效益遠超廣告投放。</p>
+    </div>
+    <div class="insight-card">
+      <h3>✅ 轉換率正在提升</h3>
+      <p>整體轉換率從 0.48% 提升至 <strong style="color:var(--blue)">0.67%</strong>，年增 39.58%。代表網站體驗有在改善中，方向正確。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MEMBERS ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Section 04 · Members</p>
+  <h2 class="section-title">會員成長分析</h2>
+  <p class="section-body">
+    本年度新增會員 436 人，年增 <strong style="color:var(--blue)">+240.62%</strong>，是所有指標中成長最快的一項。從月份分布來看，Q4（9~11月）是最關鍵的獲客季節，三個月合計占全年新增會員的40%以上，以10月（72人）和11月（67人）最為突出。這與雙11活動高度相關，同時也反映秋季市場熱度，值得在年度行銷規劃中優先布局。
+  </p>
+  <div class="two-col">
+    <div class="chart-wrap">
+      <p class="chart-title">月新增會員數</p>
+      <canvas id="memberChart" height="280"></canvas>
+    </div>
+    <div class="chart-wrap">
+      <p class="chart-title">消費顧客結構</p>
+      <canvas id="customerChart" height="280"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ RFIM ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Section 05 · Smart RFIM</p>
+  <h2 class="section-title">顧客價值分群</h2>
+  <p class="section-body">
+    透過 Smart RFIM 分析，品牌的<strong style="color:var(--blue)">高價值休眠客（191人）</strong>是當前最值得優先喚醒的族群。他們的平均LTV高達 $14,241，但目前已停止消費。相較於花費廣告預算拉新客，重新激活這群已建立信任關係的顧客，是最高效益的投資方向。核心VIP雖只有20人，但平均LTV達 $23,744，應給予最高等級的個人化服務。
+  </p>
+
+  <div class="rfim-grid">
+
+    <!-- 核心 VIP -->
+    <div class="rfim-card rfim-vip">
+      <div class="rfim-header">
+        <div>
+          <div class="rfim-badge" style="background:var(--blue-dim);color:var(--blue);border:1px solid var(--blue-mid)">最高優先</div>
+          <div class="rfim-name">核心 VIP</div>
+        </div>
+        <div class="rfim-count">20<span>人</span></div>
+      </div>
+      <div class="rfim-ltv-row">
+        <span class="rfim-ltv-label">平均 LTV</span>
+        <span class="rfim-ltv-value" style="color:var(--blue)">$23,744</span>
+      </div>
+      <div class="rfim-divider"></div>
+      <div class="rfim-strategy-label">經營策略</div>
+      <div class="rfim-tags">
+        <span class="rfim-tag">專屬預購</span>
+        <span class="rfim-tag">生日禮</span>
+        <span class="rfim-tag">新品優先通知</span>
+      </div>
+    </div>
+
+    <!-- 高價值休眠客 -->
+    <div class="rfim-card rfim-sleep">
+      <div class="rfim-header">
+        <div>
+          <div class="rfim-badge" style="background:rgba(245,158,11,0.1);color:#B45309;border:1px solid rgba(245,158,11,0.3)">立即喚醒</div>
+          <div class="rfim-name">高價值休眠客</div>
+        </div>
+        <div class="rfim-count">191<span>人</span></div>
+      </div>
+      <div class="rfim-ltv-row">
+        <span class="rfim-ltv-label">平均 LTV</span>
+        <span class="rfim-ltv-value" style="color:#B45309">$14,241</span>
+      </div>
+      <div class="rfim-divider"></div>
+      <div class="rfim-strategy-label">經營策略</div>
+      <div class="rfim-tags">
+        <span class="rfim-tag">回娘家券</span>
+        <span class="rfim-tag">$500 購物金</span>
+        <span class="rfim-tag">限時加碼</span>
+      </div>
+    </div>
+
+    <!-- 單次消費客 -->
+    <div class="rfim-card rfim-once">
+      <div class="rfim-header">
+        <div>
+          <div class="rfim-badge" style="background:var(--red-dim);color:var(--red);border:1px solid rgba(217,79,79,0.25)">培養回購</div>
+          <div class="rfim-name">單次消費客</div>
+        </div>
+        <div class="rfim-count">1,248<span>人</span></div>
+      </div>
+      <div class="rfim-ltv-row">
+        <span class="rfim-ltv-label">平均 LTV</span>
+        <span class="rfim-ltv-value" style="color:var(--mid)">$1,665</span>
+      </div>
+      <div class="rfim-divider"></div>
+      <div class="rfim-strategy-label">經營策略</div>
+      <div class="rfim-tags">
+        <span class="rfim-tag">滿額折扣</span>
+        <span class="rfim-tag">第二件推薦</span>
+        <span class="rfim-tag">社群互動</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ 2026 KEY ISSUES ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Pivot · 從回顧到策略</p>
+  <h2 class="section-title">2026 關鍵課題</h2>
+  <p class="section-body">
+    數據已說明一切。過去一年我們完成了什麼、下一年面對什麼挑戰、目標是什麼——這三件事放在一起，就是 2026 年的行動依據。
+  </p>
+
+  <div class="three-col" style="margin-bottom:40px;align-items:start;">
+
+    <!-- DONE -->
+    <div class="chart-wrap" style="border-top:3px solid var(--green);margin-bottom:0;">
+      <p class="chart-title" style="color:var(--green)">✓ 已完成</p>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:13px;font-weight:700;">✓</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">營收翻倍成長</div>
+            <div style="font-size:12px;color:var(--light)">$563K → $1,182K</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:13px;font-weight:700;">✓</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">訂單翻倍成長</div>
+            <div style="font-size:12px;color:var(--light)">223 → 473 筆</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:13px;font-weight:700;">✓</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">新會員成長 240%</div>
+            <div style="font-size:12px;color:var(--light)">128 → 436 人</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:13px;font-weight:700;">✓</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">KOC 模式驗證成功</div>
+            <div style="font-size:12px;color:var(--light)">81% 訂單來自 KOC 素材</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:white;font-size:13px;font-weight:700;">✓</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">品牌知名度建立</div>
+            <div style="font-size:12px;color:var(--light)">流量年增 53%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHALLENGES -->
+    <div class="chart-wrap" style="border-top:3px solid var(--red);margin-bottom:0;">
+      <p class="chart-title" style="color:var(--red)">⚠ 待解決課題</p>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--red-dim);border:1.5px solid var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <span style="color:var(--red);font-size:13px;font-weight:700;">!</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">舊客回購率偏低</div>
+            <div style="font-size:12px;color:var(--light)">舊客僅佔 22%（86人）</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--red-dim);border:1.5px solid var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <span style="color:var(--red);font-size:13px;font-weight:700;">!</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">商品頁流失嚴重</div>
+            <div style="font-size:12px;color:var(--light)">瀏覽到加購流失 91.4%</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--red-dim);border:1.5px solid var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <span style="color:var(--red);font-size:13px;font-weight:700;">!</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">客單價停滯</div>
+            <div style="font-size:12px;color:var(--light)">兩年均約 $2,499–2,525</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--red-dim);border:1.5px solid var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <span style="color:var(--red);font-size:13px;font-weight:700;">!</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">廣告過度依賴 KOC</div>
+            <div style="font-size:12px;color:var(--light)">素材單一，風險集中</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:12px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:var(--red-dim);border:1.5px solid var(--red);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <span style="color:var(--red);font-size:13px;font-weight:700;">!</span>
+          </div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--dark)">191位高價值客沉睡</div>
+            <div style="font-size:12px;color:var(--light)">平均 LTV $14,241 待喚醒</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2026 KPIs -->
+    <div class="chart-wrap" style="border-top:3px solid var(--blue);margin-bottom:0;background:var(--blue-dim);">
+      <p class="chart-title" style="color:var(--blue)">▶ 2026 目標 KPI</p>
+      <div style="display:flex;flex-direction:column;gap:16px;">
+        <div style="padding:14px;background:white;border-radius:4px;border:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;">舊客回購人數</div>
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--light);">86</span>
+            <span style="font-size:16px;color:var(--mid);">→</span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--blue);">150人</span>
+          </div>
+        </div>
+        <div style="padding:14px;background:white;border-radius:4px;border:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;">平均客單價</div>
+          <div style="display:flex;align-items:baseline;gap:8px;">
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--light);">$2,499</span>
+            <span style="font-size:16px;color:var(--mid);">→</span>
+            <span style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--blue);">$3,000+</span>
+          </div>
+        </div>
+        <div style="padding:14px;background:white;border-radius:4px;border:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;">商品頁轉換率</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--blue);">優化提升中</div>
+          <div style="font-size:12px;color:var(--light);margin-top:2px;">目標突破 91.4% 流失斷點</div>
+        </div>
+        <div style="padding:14px;background:white;border-radius:4px;border:1px solid var(--border);">
+          <div style="font-size:11px;color:var(--light);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;">VIP 會員制度</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--blue);">建立完成</div>
+          <div style="font-size:12px;color:var(--light);margin-top:2px;">核心 20 人 + 休眠喚醒 191 人</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ META ADS ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Section 06 · Meta Ads Analysis</p>
+  <h2 class="section-title">Meta 廣告策略分析</h2>
+  <p class="section-body">
+    整體 ROAS 為 2.42，以男性內著品類而言，由於客單價相對有限、消費週期較長、教育成本較高，ROAS 維持在 2~3 倍區間已屬<strong style="color:var(--blue)">健康表現</strong>，代表目前廣告投放策略具備穩定獲客能力。然而數據也顯示超過八成訂單來自 KOC 內容素材，成交來源仍高度集中，值得進一步多元化。
+  </p>
+
+  <!-- KPI row -->
+  <div class="hero-kpi-grid" style="max-width:100%;margin-bottom:32px;">
+    <div class="kpi-cell">
+      <span class="kpi-value">$177,578</span>
+      <span class="kpi-label">廣告總花費</span>
+    </div>
+    <div class="kpi-cell">
+      <span class="kpi-value">196</span>
+      <span class="kpi-label">廣告帶來購買數</span>
+    </div>
+    <div class="kpi-cell">
+      <span class="kpi-value">2.42x</span>
+      <span class="kpi-label">整體 ROAS</span>
+      <span class="kpi-growth up">▲ 健康區間</span>
+    </div>
+  </div>
+
+  <!-- ROAS 2.42 interpretation card -->
+  <div class="insight-card" style="margin-bottom:24px;border-left-color:var(--blue);">
+    <h3>ROAS 2.42 的意義</h3>
+    <p>男性內著屬於低頻消費、高教育成本品類，整體 ROAS 維持在 2~3 倍區間已屬<strong style="color:var(--blue)">健康表現</strong>。目前廣告已具備穩定獲客能力，未來重點不在追求更高流量，而在提高商品頁轉換率與顧客回購率。</p>
+  </div>
+
+  <!-- Ads structure table + ROAS bar chart -->
+  <div class="two-col" style="margin-bottom:24px;">
+    <div class="chart-wrap">
+      <p class="chart-title">廣告結構分析</p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>類型</th>
+            <th>花費占比</th>
+            <th>購買占比</th>
+            <th>ROAS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>KOC 口碑推薦</strong></td>
+            <td>76%</td>
+            <td>81%</td>
+            <td style="color:var(--blue);font-family:'Bebas Neue',sans-serif;font-size:18px">2.69</td>
+          </tr>
+          <tr>
+            <td><strong>0 風險試穿</strong></td>
+            <td>2%</td>
+            <td>5%</td>
+            <td style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:18px">2.95</td>
+          </tr>
+          <tr>
+            <td><strong>檔期促銷</strong></td>
+            <td>1%</td>
+            <td>2%</td>
+            <td style="color:var(--green);font-family:'Bebas Neue',sans-serif;font-size:18px">3.92</td>
+          </tr>
+          <tr>
+            <td><strong>品牌導流</strong></td>
+            <td>10%</td>
+            <td>2%</td>
+            <td style="color:var(--red);font-family:'Bebas Neue',sans-serif;font-size:18px">0.93</td>
+          </tr>
+          <tr>
+            <td><strong>其他測試素材</strong></td>
+            <td>11%</td>
+            <td>10%</td>
+            <td style="color:var(--mid);font-family:'Bebas Neue',sans-serif;font-size:18px">1.85</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="chart-wrap">
+      <p class="chart-title">各類型 ROAS 對比</p>
+      <canvas id="roasChart" height="260"></canvas>
+    </div>
+  </div>
+
+  <!-- 優勢 cards -->
+  <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:16px;">目前優勢</p>
+  <div class="three-col" style="margin-bottom:32px;">
+    <div class="insight-card">
+      <h3>KOC 模式已驗證有效</h3>
+      <p>最穩定的成交來源，消費者對真實體驗、使用心得與第三方推薦具有高度信任，是目前最核心的轉換引擎。</p>
+    </div>
+    <div class="insight-card">
+      <h3>0 風險試穿具放大潛力</h3>
+      <p>雖然投入預算較少，但 ROAS 高於平均值（2.95x）。有效降低首次購買門檻，未來可持續擴大測試比例。</p>
+    </div>
+    <div class="insight-card">
+      <h3>品牌具備檔期爆發能力</h3>
+      <p>雙11相關素材 ROAS 接近 4 倍，顯示品牌在大型促銷節點具備良好的轉換潛力，值得提前布局。</p>
+    </div>
+  </div>
+
+  <!-- 挑戰 cards -->
+  <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:16px;">未來挑戰</p>
+  <div class="three-col" style="margin-bottom:40px;">
+    <div class="insight-card danger">
+      <h3>過度依賴 KOC 成交</h3>
+      <p>若未來出現素材疲勞、合作資源減少或受眾重複觸及，可能影響整體投放效率，需建立多元內容支柱。</p>
+    </div>
+    <div class="insight-card danger">
+      <h3>情境內容不足</h3>
+      <p>廣告溝通目前集中於 Joey Pouch、包覆感、支撐性、透氣性等功能面，生活情境與情感價值相對欠缺。</p>
+    </div>
+    <div class="insight-card danger">
+      <h3>導流型廣告效益有限</h3>
+      <p>流量年增已達53%，主要問題在商品頁轉換率而非流量不足。應逐步降低純導流投放，轉向高意圖受眾與再行銷。</p>
+    </div>
+  </div>
+
+  <!-- 廣告策略方向 -->
+  <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);font-weight:600;margin-bottom:16px;">廣告內容策略方向：從產品介紹走向生活情境溝通</p>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <span class="strategy-num">A</span>
+      <h3>運動機能</h3>
+      <ul>
+        <li>重訓、跑步、戶外活動情境</li>
+        <li>強調支撐感與活動自由度</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">B</span>
+      <h3>久坐上班族</h3>
+      <ul>
+        <li>工程師、設計師、業務工作者</li>
+        <li>強調久坐舒適與透氣不悶熱</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">C</span>
+      <h3>夏季舒適</h3>
+      <ul>
+        <li>流汗、悶熱、摩擦不適場景</li>
+        <li>季節性素材，高情境共鳴</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">D</span>
+      <h3>送禮需求</h3>
+      <ul>
+        <li>男友、老公、父親節、生日禮物</li>
+        <li>觸及女性決策者購買族群</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">E</span>
+      <h3>舒適生活</h3>
+      <ul>
+        <li>自我犒賞、生活品質、每日舒適感</li>
+        <li>建立品牌情感價值與長期記憶</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="insight-card" style="margin-top:24px;border-left-color:var(--blue);">
+    <h3>廣告策略結論</h3>
+    <p>目前 2UNDR 已成功證明「KOC 能賣貨」。下一階段的目標則是<strong style="color:var(--blue)">「讓品牌本身也能賣貨」</strong>。透過內容多元化、會員經營與品牌價值建立，逐步降低對單一素材類型的依賴，提升品牌長期成長能力。</p>
+  </div>
+</section>
+
+<!-- ═══════════════ STRATEGY ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="section">
+  <p class="section-eyebrow">Section 07 · Brand Strategy</p>
+  <h2 class="section-title">品牌策略方向</h2>
+  <p class="section-body">
+    2026 年 2UNDR 的品牌經營重點將從「流量成長」轉向「品牌經營」。以手機體驗優化為基礎，以內容建立品牌價值，以社群深化互動，以會員經營提升終身價值，最終朝向男性舒適生活品牌的定位發展。讓品牌成長不再只依賴廣告流量，而是建立可持續累積的品牌資產與顧客關係。
+  </p>
+
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <span class="strategy-num">01</span>
+      <h3>以手機體驗為核心的品牌消費旅程</h3>
+      <ul>
+        <li>81% 訪客來自手機，商品頁流失高達 91.4%，優化體驗優先於增加流量</li>
+        <li>廣告素材、Landing Page、商品頁全面採 Mobile First 設計</li>
+        <li>商品頁轉型為情境式內容，溝通「為什麼能改善日常體驗」</li>
+        <li>目標：將商品頁從展示頁轉化為品牌價值溝通場域</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">02</span>
+      <h3>建立品牌內容資產，走向生活價值溝通</h3>
+      <ul>
+        <li>不再只聚焦規格與技術，圍繞男性舒適、身體照護、生活品質溝通</li>
+        <li>透過教育型內容、穿著知識、保養觀念逐步建立品牌專業形象</li>
+        <li>讓消費者購買的不只是內褲，而是更有品質的生活方式</li>
+        <li>建立品牌在男性舒適生活領域的長期內容資產</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">03</span>
+      <h3>擴大社群影響力，深化真實互動</h3>
+      <ul>
+        <li>從單向曝光轉向雙向交流，透過 Threads 建立品牌人格</li>
+        <li>增加品牌與消費者的接觸頻率與情感連結</li>
+        <li>結合奈米網紅與微型創作者，透過真實分享提高品牌信任感</li>
+        <li>讓品牌成為消費者願意持續關注與參與的社群</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">04</span>
+      <h3>建立會員經營體系，提升顧客終身價值</h3>
+      <ul>
+        <li>從「獲取新客」轉向「提高顧客終身價值」</li>
+        <li>針對核心、高價值、休眠會員設計分層溝通策略與專屬權益</li>
+        <li>透過專屬體驗、新品優先資訊、關懷機制提高品牌忠誠度</li>
+        <li>目標：將一次性消費關係轉化為長期品牌關係</li>
+      </ul>
+    </div>
+    <div class="strategy-card">
+      <span class="strategy-num">05</span>
+      <h3>從產品品牌升級為男性舒適生活品牌</h3>
+      <ul>
+        <li>SWING 系列主導熱銷，消費者已認可舒適體驗定位</li>
+        <li>深化「舒適」核心價值，不停留於內褲品類</li>
+        <li>讓消費者提到 2UNDR 聯想到：舒適、自信、品質、生活品味</li>
+        <li>整合內容、產品與會員經營，成為男性日常信賴的舒適體驗品牌</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CONCLUSION ═══════════════ -->
+<div class="blue-rule"></div>
+<section class="conclusion">
+  <h2 class="conclusion-title">從流量成長<br>到<em>顧客終身價值</em>成長</h2>
+  <p class="conclusion-body">
+    2025–2026 年，2UNDR 已完成品牌第一階段成長：建立穩定的新客獲取能力、擴大品牌曝光與會員規模。下一階段將聚焦於提高回購率、提升客單價、深化會員經營與建立品牌資產，逐步提升顧客終身價值（LTV），打造更具韌性的成長模式。
+  </p>
+  <div class="final-list">
+    <span class="final-tag">↑ 手機體驗優化</span>
+    <span class="final-tag">↑ 品牌內容資產</span>
+    <span class="final-tag">↑ 社群真實互動</span>
+    <span class="final-tag">↑ 會員終身價值</span>
+    <span class="final-tag">↑ 舒適生活品牌定位</span>
+  </div>
+</section>
+
+<footer>
+  2UNDR Taiwan · 年度營運分析報告 · 2025/06/01–2026/06/01
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+Chart.defaults.color = '#9AA0B0';
+Chart.defaults.borderColor = '#DDE0E8';
+Chart.defaults.font.family = "'Inter', sans-serif";
+
+const blue  = 'rgb(67,143,175)';
+const blueMid = 'rgba(67,143,175,0.35)';
+const blueDim = 'rgba(67,143,175,0.12)';
+const grey  = '#ECEEF2';
+const greyMid = '#C8CCD6';
+const red   = '#D94F4F';
+const green = '#2E9E6B';
+
+// ── ROAS Chart ──
+new Chart(document.getElementById('roasChart'), {
+  type: 'bar',
+  data: {
+    labels: ['KOC 口碑推薦','0 風險試穿','檔期促銷','品牌導流','其他測試素材'],
+    datasets: [{
+      label: 'ROAS',
+      data: [2.69, 2.95, 3.92, 0.93, 1.85],
+      backgroundColor: [blue, green, green, red, greyMid],
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#fff', borderColor: '#DDE0E8', borderWidth: 1,
+        titleColor: '#111318', bodyColor: '#5A6072',
+        callbacks: { label: ctx => ` ROAS: ${ctx.raw}x` }
+      },
+      annotation: {}
+    },
+    scales: {
+      x: {
+        grid: { color: '#ECEEF2' },
+        ticks: { color: '#9AA0B0', callback: v => `${v}x` },
+        min: 0, max: 4.5
+      },
+      y: { grid: { display: false }, ticks: { color: '#2C3040', font: { size: 11 } } }
+    }
+  }
+});
+
+
+const months = ['25/06','25/07','25/08','25/09','25/10','25/11','25/12','26/01','26/02','26/03','26/04','26/05','26/06'];
+const revenue = [62000,55000,73000,85000,98000,199661,72000,68000,58000,90000,122639,130301,95000];
+const gmv     = [70000,61000,81000,94000,108000,219127,80000,75000,65000,100000,135819,140621,105000];
+// 2024–2025 estimated monthly (total ~563K, same pattern)
+const revenuePrev = [28000,24000,33000,38000,44000,90000,32000,31000,26000,41000,55000,58000,43000];
+
+new Chart(document.getElementById('revenueChart'), {
+  type: 'line',
+  data: {
+    labels: months,
+    datasets: [
+      {
+        label: '2025–2026 營業額',
+        data: revenue.map(v => v/1000),
+        borderColor: blue,
+        backgroundColor: blueDim,
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: blue,
+        pointRadius: 4,
+        pointHoverRadius: 7,
+        borderWidth: 2.5,
+      },
+      {
+        label: '2024–2025 營業額',
+        data: revenuePrev.map(v => v/1000),
+        borderColor: greyMid,
+        backgroundColor: 'transparent',
+        fill: false,
+        tension: 0.4,
+        pointBackgroundColor: greyMid,
+        pointRadius: 3,
+        borderWidth: 1.5,
+        borderDash: [5,3],
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: true, labels: { color: '#5A6072', font: { size: 12 } } },
+      tooltip: {
+        backgroundColor: '#fff',
+        borderColor: '#DDE0E8',
+        borderWidth: 1,
+        titleColor: '#111318',
+        bodyColor: '#5A6072',
+        callbacks: { label: ctx => ` ${ctx.dataset.label}: $${(ctx.raw*1000).toLocaleString()}` }
+      }
+    },
+    scales: {
+      x: { grid: { color: '#ECEEF2' }, ticks: { color: '#9AA0B0', font: { size: 11 } } },
+      y: { grid: { color: '#ECEEF2' }, ticks: { color: '#9AA0B0', font: { size: 11 }, callback: v => `$${v}K` } }
+    }
+  }
+});
+
+// ── YoY Comparison Chart ──
+new Chart(document.getElementById('yoyChart'), {
+  type: 'bar',
+  data: {
+    labels: ['GMV', '總營業額', '訂單數', '消費顧客', '新增會員'],
+    datasets: [
+      {
+        label: '2024–2025',
+        data: [604, 563, 223, 181, 128],
+        backgroundColor: greyMid,
+        borderRadius: 2,
+      },
+      {
+        label: '2025–2026',
+        data: [1316, 1182, 473, 394, 436],
+        backgroundColor: blue,
+        borderRadius: 2,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: true, labels: { color: '#5A6072', font: { size: 11 } } },
+      tooltip: {
+        backgroundColor: '#fff', borderColor: '#DDE0E8', borderWidth: 1,
+        titleColor: '#111318', bodyColor: '#5A6072',
+        callbacks: {
+          label: ctx => {
+            const v = ctx.raw;
+            const label = ctx.dataset.label;
+            // Show $ for money metrics, plain for counts
+            if (ctx.dataIndex < 2) return ` ${label}: $${(v*1000).toLocaleString()}`;
+            return ` ${label}: ${v}`;
+          }
+        }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#5A6072', font: { size: 11 } } },
+      y: { grid: { color: '#ECEEF2' }, ticks: { color: '#9AA0B0' } }
+    }
+  }
+});
+
+// ── Growth Rate Chart ──
+new Chart(document.getElementById('growthChart'), {
+  type: 'bar',
+  data: {
+    labels: ['GMV\n+117.95%', '總營業額\n+109.95%', '訂單數\n+112.11%', '消費顧客\n+117.68%', '新增會員\n+240.62%', '網站流量\n+53.46%'],
+    datasets: [{
+      label: '年增率 (%)',
+      data: [117.95, 109.95, 112.11, 117.68, 240.62, 53.46],
+      backgroundColor: [blue, blue, blue, blue, 'rgb(46,158,107)', greyMid],
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#fff', borderColor: '#DDE0E8', borderWidth: 1,
+        titleColor: '#111318', bodyColor: '#5A6072',
+        callbacks: { label: ctx => ` +${ctx.raw}%` }
+      }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#5A6072', font: { size: 11 } } },
+      y: {
+        grid: { color: '#ECEEF2' },
+        ticks: { color: '#9AA0B0', callback: v => `+${v}%` }
+      }
+    }
+  }
+});
+
+// ── Traffic Bar ──
+new Chart(document.getElementById('trafficChart'), {
+  type: 'bar',
+  data: {
+    labels: ['不重複訪客 (千)', '轉換率 ×100'],
+    datasets: [
+      { label: '本期',     data: [63.798, 67], backgroundColor: blue,    borderRadius: 2 },
+      { label: '去年同期', data: [41.6,   48], backgroundColor: greyMid, borderRadius: 2 }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: true, labels: { color: '#5A6072', font: { size: 11 } } },
+      tooltip: { backgroundColor: '#fff', borderColor: '#DDE0E8', borderWidth: 1, titleColor: '#111318', bodyColor: '#5A6072' }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#9AA0B0', font: { size: 11 } } },
+      y: { grid: { color: '#ECEEF2' }, ticks: { color: '#9AA0B0' } }
+    }
+  }
+});
+
+// ── Member Chart ──
+new Chart(document.getElementById('memberChart'), {
+  type: 'bar',
+  data: {
+    labels: ['06','07','08','09','10','11','12','01','02','03','04','05','06'],
+    datasets: [
+      {
+        label: '2024–2025',
+        data: [6,8,10,14,18,12,10,8,12,11,9,7,3],
+        backgroundColor: greyMid,
+        borderRadius: 2,
+      },
+      {
+        label: '2025–2026',
+        data: [18,22,38,72,67,25,38,22,28,35,41,30,20],
+        backgroundColor: ctx => ctx.raw >= 60 ? blue : ctx.raw >= 35 ? blueMid : 'rgba(67,143,175,0.25)',
+        borderRadius: 2,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: true, labels: { color: '#5A6072', font: { size: 11 } } },
+      tooltip: { backgroundColor: '#fff', borderColor: '#DDE0E8', borderWidth: 1, titleColor: '#111318', bodyColor: '#5A6072' }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#9AA0B0', font: { size: 10 } } },
+      y: { grid: { color: '#ECEEF2' }, ticks: { color: '#9AA0B0' } }
+    }
+  }
+});
+
+// ── Customer Pie ──
+new Chart(document.getElementById('customerChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['新客 (78%)', '舊客 (22%)'],
+    datasets: [{
+      data: [308, 86],
+      backgroundColor: [blue, greyMid],
+      borderColor: ['#fff', '#fff'],
+      borderWidth: 3,
+    }]
+  },
+  options: {
+    responsive: true,
+    cutout: '65%',
+    plugins: {
+      legend: {
+        display: true,
+        position: 'bottom',
+        labels: { color: '#5A6072', font: { size: 12 }, padding: 20, boxWidth: 12 }
+      },
+      tooltip: { backgroundColor: '#fff', borderColor: '#DDE0E8', borderWidth: 1, titleColor: '#111318', bodyColor: '#5A6072' }
+    }
+  }
+});
+
+</script>
+</body>
+</html>
